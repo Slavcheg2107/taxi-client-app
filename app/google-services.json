@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "834564288611",
+    "firebase_url": "https://taxi-bishkek-98dd1.firebaseio.com",
+    "project_id": "taxi-bishkek-98dd1",
+    "storage_bucket": "taxi-bishkek-98dd1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:834564288611:android:c14c309b6ec0034d",
+        "android_client_info": {
+          "package_name": "jdroidcoder.ua.taxi_bishkek"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "834564288611-1ug4d2a7pvfbm045e4dbh4lumkbcl800.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "jdroidcoder.ua.taxi_bishkek",
+            "certificate_hash": "a3b2f554cfa27b856f71d24c51a2c153a56432d1"
+          }
+        },
+        {
+          "client_id": "834564288611-7mf979fojs9e78ihn5uqe0iieku4ap7t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDI3HLkVqtrHHsxkBbKJrUM6YbXNCkIWYc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "834564288611-7mf979fojs9e78ihn5uqe0iieku4ap7t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
