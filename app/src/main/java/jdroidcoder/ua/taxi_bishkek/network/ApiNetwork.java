@@ -31,6 +31,12 @@ public interface ApiNetwork {
                                           @Field("phone") String phone);
 
     @FormUrlEncoded
+    @POST("setCoordinate")
+    Call<Void> setCoordinate(@Field("userEmail") String userEmail,
+                             @Field("lat") Double lat,
+                             @Field("lng") Double lng);
+
+    @FormUrlEncoded
     @POST("makeOrder")
     Call<OrderDto> makeOrder(@Field("pointA") String pointA,
                              @Field("pointB") String pointB,

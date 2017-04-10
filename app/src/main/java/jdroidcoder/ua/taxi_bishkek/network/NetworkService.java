@@ -2,6 +2,7 @@ package jdroidcoder.ua.taxi_bishkek.network;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -72,6 +73,7 @@ public class NetworkService {
                 UserProfileDto.User.setPhone(response.body().getPhone());
                 UserProfileDto.User.setFirstName(response.body().getFirstName());
                 UserProfileDto.User.setLastName(response.body().getLastName());
+                UserProfileDto.User.setEmail(response.body().getEmail());
                 EventBus.getDefault().post(new MoveNextEvent());
             }
 
@@ -115,12 +117,12 @@ public class NetworkService {
         });
     }
 
-    public void removeOrder(final OrderDto orderDto){
+    public void removeOrder(final OrderDto orderDto) {
         Call<Boolean> call = retrofitConfig.getApiNetwork().removeOrder(orderDto.getId());
         call.enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                if(response.body()){
+                if (response.body()) {
                     OrderDto.Oreders.getOrders().remove(orderDto);
                     EventBus.getDefault().post(new UpdateAdapterEvent());
                 }
@@ -128,6 +130,22 @@ public class NetworkService {
 
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
+                EventBus.getDefault().post(new ErrorMessageEvent(t.getMessage()));
+            }
+        });
+    }
+
+    public void setCoordinate(Double lat, Double lng) {
+        System.out.println(UserProfileDto.User.getEmail());
+        Call<Void> call = retrofitConfig.getApiNetwork().setCoordinate(UserProfileDto.User.getEmail(), lat, lng);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                System.out.println("dsa");
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
                 EventBus.getDefault().post(new ErrorMessageEvent(t.getMessage()));
             }
         });

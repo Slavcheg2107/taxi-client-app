@@ -49,7 +49,7 @@ import jdroidcoder.ua.taxi_bishkek.service.LocationService;
 /**
  * Created by jdroidcoder on 07.04.17.
  */
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
     private MarkerOptions markerOptions;
@@ -154,6 +154,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Subscribe
     public void onChangeLocationEvent(ChangeLocationEvent changeLocationEvent) {
+        networkService.setCoordinate(changeLocationEvent.getLocation().getLatitude(),
+                changeLocationEvent.getLocation().getLongitude());
         LatLng sydney = new LatLng(changeLocationEvent.getLocation().getLatitude(),
                 changeLocationEvent.getLocation().getLongitude());
         markerOptions.position(sydney);
@@ -205,15 +207,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.addMarker(markerOptions);
             mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(sydney, 17f, 0f, 0f)));
             mMap.setInfoWindowAdapter(new MarkerAdapter(this));
-            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                @Override
-                public boolean onMarkerClick(Marker marker) {
-                    marker.showInfoWindow();
-                    return false;
-                }
-            });
+            networkService.setCoordinate(location.getLatitude(), location.getLongitude());
+            mMap.setOnMarkerClickListener(this);
         } catch (Exception e) {
 
         }
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        marker.showInfoWindow();
+        return false;
     }
 }
