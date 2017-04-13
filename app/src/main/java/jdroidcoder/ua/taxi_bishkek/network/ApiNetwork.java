@@ -32,7 +32,7 @@ public interface ApiNetwork {
 
     @FormUrlEncoded
     @POST("setCoordinate")
-    Call<Void> setCoordinate(@Field("userEmail") String userEmail,
+    Call<Void> setCoordinate(@Field("userPhone") String userPhone,
                              @Field("lat") Double lat,
                              @Field("lng") Double lng);
 

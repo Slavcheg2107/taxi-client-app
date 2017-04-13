@@ -136,12 +136,10 @@ public class NetworkService {
     }
 
     public void setCoordinate(Double lat, Double lng) {
-        System.out.println(UserProfileDto.User.getEmail());
-        Call<Void> call = retrofitConfig.getApiNetwork().setCoordinate(UserProfileDto.User.getEmail(), lat, lng);
+        Call<Void> call = retrofitConfig.getApiNetwork().setCoordinate(UserProfileDto.User.getPhone(), lat, lng);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                System.out.println("dsa");
             }
 
             @Override
