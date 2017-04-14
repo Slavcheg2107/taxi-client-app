@@ -42,6 +42,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -50,6 +51,7 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import jdroidcoder.ua.taxi_bishkek.R;
 import jdroidcoder.ua.taxi_bishkek.adapters.MarkerAdapter;
 import jdroidcoder.ua.taxi_bishkek.adapters.OrderAdapter;
@@ -86,6 +88,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private NetworkService networkService;
     private Calendar mcurrentTime = Calendar.getInstance();
     private OrderAdapter orderAdapter;
+    private Location location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -260,7 +263,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             return;
         }
         try {
-            Location location = ((LocationManager) getSystemService(LOCATION_SERVICE)).
+            location = ((LocationManager) getSystemService(LOCATION_SERVICE)).
                     getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             LatLng sydney = new LatLng(location.getLatitude(),
                     location.getLongitude());
@@ -292,13 +295,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.changeNumber) {
             final View view = LayoutInflater.from(this).inflate(R.layout.alert_style, null);
+            final EditText phoneET = (EditText) view.findViewById(R.id.phone);
+            phoneET.setText(UserProfileDto.User.getPhone());
             new AlertDialog.Builder(this)
                     .setView(view)
                     .setCancelable(false)
                     .setPositiveButton("Save", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            EditText phoneET = (EditText) view.findViewById(R.id.phone);
                             if (!TextUtils.isEmpty(phoneET.getText().toString())) {
                                 UserProfileDto.User.setPhone(phoneET.getText().toString());
                                 networkService.setDataToProfile(UserProfileDto.User.getEmail(),
@@ -311,5 +315,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }).show();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @OnTextChanged(R.id.toET)
+    public void streets() {
+
     }
 }
