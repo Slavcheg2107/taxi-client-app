@@ -9,4 +9,5 @@
     <string name="make_order_label">Make order</string>
     <string name="done_order_label">Done order</string>
     <string name="empty_order">All feild must be full</string>
+    <string name="changeNumber">Change number</string>
 </resources>

@@ -2,6 +2,7 @@ package jdroidcoder.ua.taxi_bishkek.activity;
 
 import android.Manifest;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -12,8 +13,13 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -37,6 +43,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -50,6 +57,7 @@ import jdroidcoder.ua.taxi_bishkek.events.ChangeLocationEvent;
 import jdroidcoder.ua.taxi_bishkek.events.ErrorMessageEvent;
 import jdroidcoder.ua.taxi_bishkek.events.OrderEvent;
 import jdroidcoder.ua.taxi_bishkek.events.UpdateAdapterEvent;
+import jdroidcoder.ua.taxi_bishkek.model.UserProfileDto;
 import jdroidcoder.ua.taxi_bishkek.network.NetworkService;
 import jdroidcoder.ua.taxi_bishkek.service.LocationService;
 
@@ -59,7 +67,7 @@ import static jdroidcoder.ua.taxi_bishkek.R.id.up;
 /**
  * Created by jdroidcoder on 07.04.17.
  */
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
     private MarkerOptions markerOptions;
@@ -101,6 +109,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
         orderAdapter = new OrderAdapter(this);
         listView.setAdapter(orderAdapter);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+
+        timeTV.setText(simpleDateFormat.format(new Date()));
     }
 
     @OnClick(R.id.makeOrder)
@@ -141,6 +152,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Double lat = addresses.get(0).getLatitude();
                 Double lon = addresses.get(0).getLongitude();
                 return new double[]{lat, lon};
+            } else {
+                EventBus.getDefault().post(new ErrorMessageEvent("Address not found"));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            EventBus.getDefault().post(new ErrorMessageEvent("Address not found"));
+        }
+        return null;
+    }
+
+    private String getAddressLocation(double lat, double lng) {
+        Geocoder geoCoder = new Geocoder(this, Locale.getDefault());
+        try {
+            List<Address> addresses = geoCoder.getFromLocation(lat, lng, 1);
+            if (addresses.size() > 0) {
+                return addresses.get(0).getAddressLine(0);
             } else {
                 EventBus.getDefault().post(new ErrorMessageEvent("Address not found"));
             }
@@ -243,6 +270,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.setInfoWindowAdapter(new MarkerAdapter(this));
             networkService.setCoordinate(location.getLatitude(), location.getLongitude());
             mMap.setOnMarkerClickListener(this);
+            fromET.setText(getAddressLocation(location.getLatitude(), location.getLongitude()));
         } catch (Exception e) {
 
         }
@@ -252,5 +280,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public boolean onMarkerClick(Marker marker) {
         marker.showInfoWindow();
         return false;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.changeNumber) {
+            final View view = LayoutInflater.from(this).inflate(R.layout.alert_style, null);
+            new AlertDialog.Builder(this)
+                    .setView(view)
+                    .setCancelable(false)
+                    .setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            EditText phoneET = (EditText) view.findViewById(R.id.phone);
+                            if (!TextUtils.isEmpty(phoneET.getText().toString())) {
+                                UserProfileDto.User.setPhone(phoneET.getText().toString());
+                                networkService.setDataToProfile(UserProfileDto.User.getEmail(),
+                                        UserProfileDto.User.getFirstName(),
+                                        UserProfileDto.User.getLastName(),
+                                        UserProfileDto.User.getPhone());
+                                dialog.dismiss();
+                            }
+                        }
+                    }).show();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
