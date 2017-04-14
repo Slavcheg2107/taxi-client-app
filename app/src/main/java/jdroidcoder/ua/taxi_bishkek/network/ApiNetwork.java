@@ -42,7 +42,9 @@ public interface ApiNetwork {
                              @Field("pointB") String pointB,
                              @Field("time") Long time,
                              @Field("userPhone") String userPhone,
-                             @Field("status") String status);
+                             @Field("status") String status,
+                             @Field("pointACoordinate") double[] pointACoordinate,
+                             @Field("pointBCoordinate") double[] pointBCoordinate);
 
     @GET("getOrders")
     Call<List<OrderDto>> getOrders(@Query("userPhone") String userPhone);

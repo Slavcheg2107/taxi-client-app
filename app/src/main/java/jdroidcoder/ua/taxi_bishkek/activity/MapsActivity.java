@@ -4,6 +4,8 @@ import android.Manifest;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -22,6 +25,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -30,8 +34,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,6 +52,9 @@ import jdroidcoder.ua.taxi_bishkek.events.OrderEvent;
 import jdroidcoder.ua.taxi_bishkek.events.UpdateAdapterEvent;
 import jdroidcoder.ua.taxi_bishkek.network.NetworkService;
 import jdroidcoder.ua.taxi_bishkek.service.LocationService;
+
+import static jdroidcoder.ua.taxi_bishkek.R.id.map;
+import static jdroidcoder.ua.taxi_bishkek.R.id.up;
 
 /**
  * Created by jdroidcoder on 07.04.17.
@@ -87,7 +97,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         startService(new Intent(this, LocationService.class));
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(map);
         mapFragment.getMapAsync(this);
         orderAdapter = new OrderAdapter(this);
         listView.setAdapter(orderAdapter);
@@ -107,14 +117,38 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @OnClick(R.id.sendOrder)
     public void sendOrder() {
-        if (!TextUtils.isEmpty(fromET.getText().toString())
-                && !TextUtils.isEmpty(toET.getText().toString())
-                && !TextUtils.isEmpty(timeTV.getText().toString())) {
-            networkService.makeOrder(fromET.getText().toString(), toET.getText().toString(), mcurrentTime.getTime());
-            orderView.setVisibility(View.GONE);
-        } else {
-            Toast.makeText(this, getString(R.string.empty_order), Toast.LENGTH_LONG).show();
+        double[] pointACoordinate = getAddressLocation(fromET.getText().toString());
+        double[] pointBCoordinate = getAddressLocation(toET.getText().toString());
+        if (pointACoordinate != null && pointBCoordinate != null) {
+            if (!TextUtils.isEmpty(fromET.getText().toString())
+                    && !TextUtils.isEmpty(toET.getText().toString())
+                    && !TextUtils.isEmpty(timeTV.getText().toString())) {
+                networkService.makeOrder(fromET.getText().toString(),
+                        toET.getText().toString(), mcurrentTime.getTime(),
+                        pointACoordinate, pointBCoordinate);
+                orderView.setVisibility(View.GONE);
+            } else {
+                Toast.makeText(this, getString(R.string.empty_order), Toast.LENGTH_LONG).show();
+            }
         }
+    }
+
+    private double[] getAddressLocation(String address) {
+        Geocoder geoCoder = new Geocoder(this, Locale.getDefault());
+        try {
+            List<Address> addresses = geoCoder.getFromLocationName(address, 5);
+            if (addresses.size() > 0) {
+                Double lat = addresses.get(0).getLatitude();
+                Double lon = addresses.get(0).getLongitude();
+                return new double[]{lat, lon};
+            } else {
+                EventBus.getDefault().post(new ErrorMessageEvent("Address not found"));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            EventBus.getDefault().post(new ErrorMessageEvent("Address not found"));
+        }
+        return null;
     }
 
     @OnClick(R.id.timeTV)

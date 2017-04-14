@@ -84,9 +84,10 @@ public class NetworkService {
         });
     }
 
-    public void makeOrder(String pointA, String pointB, Date date) {
+    public void makeOrder(String pointA, String pointB, Date date,
+                          double[] pointACoordinate, double[] pointBCoordinate) {
         Call<OrderDto> call = retrofitConfig.getApiNetwork().makeOrder(pointA, pointB, date.getTime(),
-                UserProfileDto.User.getPhone(), "new");
+                UserProfileDto.User.getPhone(), "new", pointACoordinate, pointBCoordinate);
         call.enqueue(new Callback<OrderDto>() {
             @Override
             public void onResponse(Call<OrderDto> call, Response<OrderDto> response) {
