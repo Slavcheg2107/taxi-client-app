@@ -9,6 +9,7 @@
         android:id="@+id/decore"
         android:layout_width="match_parent"
         android:layout_height="5dp"
+        android:elevation="100dp"
         android:background="@drawable/line"
         android:orientation="vertical" />
 
