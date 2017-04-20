@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -293,26 +294,29 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        final View view = LayoutInflater.from(this).inflate(R.layout.alert_style, null);
         if (item.getItemId() == R.id.changeNumber) {
-            final View view = LayoutInflater.from(this).inflate(R.layout.alert_style, null);
+            final AlertDialog alertDialog = new AlertDialog.Builder(this)
+                    .setView(view)
+                    .create();
+
             final EditText phoneET = (EditText) view.findViewById(R.id.phone);
             phoneET.setText(UserProfileDto.User.getPhone());
-            new AlertDialog.Builder(this)
-                    .setView(view)
-                    .setCancelable(false)
-                    .setPositiveButton("Save", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (!TextUtils.isEmpty(phoneET.getText().toString())) {
-                                UserProfileDto.User.setPhone(phoneET.getText().toString());
-                                networkService.setDataToProfile(UserProfileDto.User.getEmail(),
-                                        UserProfileDto.User.getFirstName(),
-                                        UserProfileDto.User.getLastName(),
-                                        UserProfileDto.User.getPhone());
-                                dialog.dismiss();
-                            }
-                        }
-                    }).show();
+            view.findViewById(R.id.save).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!TextUtils.isEmpty(phoneET.getText().toString())) {
+                        UserProfileDto.User.setPhone(phoneET.getText().toString());
+                        networkService.setDataToProfile(UserProfileDto.User.getEmail(),
+                                UserProfileDto.User.getFirstName(),
+                                UserProfileDto.User.getLastName(),
+                                UserProfileDto.User.getPhone());
+                        alertDialog.dismiss();
+                    }
+                }
+            });
+
+            alertDialog.show();
         }
         return super.onOptionsItemSelected(item);
     }
