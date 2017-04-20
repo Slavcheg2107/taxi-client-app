@@ -78,7 +78,7 @@ public class OrderDto {
     }
 
     public String getPoints() {
-        return getPointA() + "\n\n" + getPointB() + "\n";
+        return getPointA() + "\n" + getPointB() + "\n";
     }
 
     @Override
