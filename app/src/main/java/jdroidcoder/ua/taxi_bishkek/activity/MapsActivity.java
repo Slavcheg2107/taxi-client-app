@@ -60,6 +60,7 @@ import jdroidcoder.ua.taxi_bishkek.events.ChangeLocationEvent;
 import jdroidcoder.ua.taxi_bishkek.events.ErrorMessageEvent;
 import jdroidcoder.ua.taxi_bishkek.events.OrderEvent;
 import jdroidcoder.ua.taxi_bishkek.events.UpdateAdapterEvent;
+import jdroidcoder.ua.taxi_bishkek.model.OrderDto;
 import jdroidcoder.ua.taxi_bishkek.model.UserProfileDto;
 import jdroidcoder.ua.taxi_bishkek.network.NetworkService;
 import jdroidcoder.ua.taxi_bishkek.service.LocationService;
@@ -138,10 +139,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             if (!TextUtils.isEmpty(fromET.getText().toString())
                     && !TextUtils.isEmpty(toET.getText().toString())
                     && !TextUtils.isEmpty(timeTV.getText().toString())) {
-                networkService.makeOrder(fromET.getText().toString(),
-                        toET.getText().toString(), mcurrentTime.getTime(),
-                        pointACoordinate, pointBCoordinate);
-                orderView.setVisibility(View.GONE);
+                if(OrderDto.Oreders.getOrders().size()==0) {
+                    networkService.makeOrder(fromET.getText().toString(),
+                            toET.getText().toString(), mcurrentTime.getTime(),
+                            pointACoordinate, pointBCoordinate);
+                    orderView.setVisibility(View.GONE);
+                }else {
+                    Toast.makeText(this, getString(R.string.you_are_have_order), Toast.LENGTH_LONG).show();
+                }
             } else {
                 Toast.makeText(this, getString(R.string.empty_order), Toast.LENGTH_LONG).show();
             }
