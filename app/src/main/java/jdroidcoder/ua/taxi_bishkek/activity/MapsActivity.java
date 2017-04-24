@@ -83,12 +83,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     EditText fromET;
     @BindView(R.id.toET)
     EditText toET;
-    @BindView(R.id.timeTV)
-    EditText timeTV;
     @BindView(R.id.orderListView)
     ListView listView;
     private NetworkService networkService;
-    private Calendar mcurrentTime = Calendar.getInstance();
     private OrderAdapter orderAdapter;
     private Location location;
 
@@ -114,9 +111,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
         orderAdapter = new OrderAdapter(this);
         listView.setAdapter(orderAdapter);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
-
-        timeTV.setText(simpleDateFormat.format(new Date()));
     }
 
     @OnClick(R.id.makeOrder)
@@ -137,11 +131,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         double[] pointBCoordinate = getAddressLocation(toET.getText().toString());
         if (pointACoordinate != null && pointBCoordinate != null) {
             if (!TextUtils.isEmpty(fromET.getText().toString())
-                    && !TextUtils.isEmpty(toET.getText().toString())
-                    && !TextUtils.isEmpty(timeTV.getText().toString())) {
+                    && !TextUtils.isEmpty(toET.getText().toString())) {
                 if(OrderDto.Oreders.getOrders().size()==0) {
                     networkService.makeOrder(fromET.getText().toString(),
-                            toET.getText().toString(), mcurrentTime.getTime(),
+                            toET.getText().toString(), new Date(),
                             pointACoordinate, pointBCoordinate);
                     orderView.setVisibility(View.GONE);
                 }else {
@@ -185,22 +178,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             EventBus.getDefault().post(new ErrorMessageEvent("Address not found"));
         }
         return null;
-    }
-
-    @OnClick(R.id.timeTV)
-    public void selectTime() {
-        int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-        int minute = mcurrentTime.get(Calendar.MINUTE);
-        new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                mcurrentTime.set(mcurrentTime.get(Calendar.YEAR), mcurrentTime.get(Calendar.MONTH)
-                        , mcurrentTime.get(Calendar.DATE), hourOfDay, minute);
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
-
-                timeTV.setText(simpleDateFormat.format(mcurrentTime.getTime()));
-            }
-        }, hour, minute, true).show();
     }
 
     @OnClick(R.id.doneOrder)
