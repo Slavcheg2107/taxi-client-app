@@ -1,4 +1,4 @@
-package jdroidcoder.ua.taxi_bishkek.service;
+package jdroidcoder.ua.taxi_bishkek_client.service;
 
 import android.Manifest;
 import android.app.Service;
@@ -14,7 +14,7 @@ import android.support.v4.app.ActivityCompat;
 
 import org.greenrobot.eventbus.EventBus;
 
-import jdroidcoder.ua.taxi_bishkek.events.ChangeLocationEvent;
+import jdroidcoder.ua.taxi_bishkek_client.events.ChangeLocationEvent;
 
 /**
  * Created by jdroidcoder on 07.04.17.

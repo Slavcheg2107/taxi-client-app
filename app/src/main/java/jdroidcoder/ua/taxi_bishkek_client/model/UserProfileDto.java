@@ -1,4 +1,4 @@
-package jdroidcoder.ua.taxi_bishkek.model;
+package jdroidcoder.ua.taxi_bishkek_client.model;
 
 /**
  * Created by jdroidcoder on 07.04.17.

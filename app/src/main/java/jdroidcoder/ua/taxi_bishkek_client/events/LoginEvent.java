@@ -1,4 +1,4 @@
-package jdroidcoder.ua.taxi_bishkek.events;
+package jdroidcoder.ua.taxi_bishkek_client.events;
 
 /**
  * Created by jdroidcoder on 07.04.17.

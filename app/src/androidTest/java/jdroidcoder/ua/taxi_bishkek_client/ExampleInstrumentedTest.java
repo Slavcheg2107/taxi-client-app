@@ -1,4 +1,4 @@
-package jdroidcoder.ua.taxi_bishkek;
+package jdroidcoder.ua.taxi_bishkek_client;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

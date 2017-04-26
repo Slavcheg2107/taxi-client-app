@@ -1,9 +1,9 @@
-package jdroidcoder.ua.taxi_bishkek.network;
+package jdroidcoder.ua.taxi_bishkek_client.network;
 
 import java.util.List;
 
-import jdroidcoder.ua.taxi_bishkek.model.OrderDto;
-import jdroidcoder.ua.taxi_bishkek.model.UserProfileDto;
+import jdroidcoder.ua.taxi_bishkek_client.model.OrderDto;
+import jdroidcoder.ua.taxi_bishkek_client.model.UserProfileDto;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;

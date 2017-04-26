@@ -1,4 +1,4 @@
-package jdroidcoder.ua.taxi_bishkek.network;
+package jdroidcoder.ua.taxi_bishkek_client.network;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

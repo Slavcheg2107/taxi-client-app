@@ -1,4 +1,4 @@
-package jdroidcoder.ua.taxi_bishkek.adapters;
+package jdroidcoder.ua.taxi_bishkek_client.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,8 +8,8 @@ import android.widget.TextView;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 
-import jdroidcoder.ua.taxi_bishkek.R;
-import jdroidcoder.ua.taxi_bishkek.model.OrderDto;
+import jdroidcoder.ua.taxi_bishkek_client.R;
+import jdroidcoder.ua.taxi_bishkek_client.model.OrderDto;
 
 /**
  * Created by jdroidcoder on 10.04.17.

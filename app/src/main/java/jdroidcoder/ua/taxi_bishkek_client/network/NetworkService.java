@@ -1,18 +1,17 @@
-package jdroidcoder.ua.taxi_bishkek.network;
+package jdroidcoder.ua.taxi_bishkek_client.network;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
-import jdroidcoder.ua.taxi_bishkek.events.ErrorMessageEvent;
-import jdroidcoder.ua.taxi_bishkek.events.MoveNextEvent;
-import jdroidcoder.ua.taxi_bishkek.events.OrderEvent;
-import jdroidcoder.ua.taxi_bishkek.events.TypePhoneEvent;
-import jdroidcoder.ua.taxi_bishkek.events.UpdateAdapterEvent;
-import jdroidcoder.ua.taxi_bishkek.model.OrderDto;
-import jdroidcoder.ua.taxi_bishkek.model.UserProfileDto;
+import jdroidcoder.ua.taxi_bishkek_client.events.ErrorMessageEvent;
+import jdroidcoder.ua.taxi_bishkek_client.events.MoveNextEvent;
+import jdroidcoder.ua.taxi_bishkek_client.events.OrderEvent;
+import jdroidcoder.ua.taxi_bishkek_client.events.TypePhoneEvent;
+import jdroidcoder.ua.taxi_bishkek_client.events.UpdateAdapterEvent;
+import jdroidcoder.ua.taxi_bishkek_client.model.OrderDto;
+import jdroidcoder.ua.taxi_bishkek_client.model.UserProfileDto;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

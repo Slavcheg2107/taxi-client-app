@@ -1,6 +1,5 @@
-package jdroidcoder.ua.taxi_bishkek.activity;
+package jdroidcoder.ua.taxi_bishkek_client.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -24,12 +23,12 @@ import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import jdroidcoder.ua.taxi_bishkek.R;
-import jdroidcoder.ua.taxi_bishkek.events.ErrorMessageEvent;
-import jdroidcoder.ua.taxi_bishkek.events.MoveNextEvent;
-import jdroidcoder.ua.taxi_bishkek.events.TypePhoneEvent;
-import jdroidcoder.ua.taxi_bishkek.model.UserProfileDto;
-import jdroidcoder.ua.taxi_bishkek.network.NetworkService;
+import jdroidcoder.ua.taxi_bishkek_client.R;
+import jdroidcoder.ua.taxi_bishkek_client.events.ErrorMessageEvent;
+import jdroidcoder.ua.taxi_bishkek_client.events.MoveNextEvent;
+import jdroidcoder.ua.taxi_bishkek_client.events.TypePhoneEvent;
+import jdroidcoder.ua.taxi_bishkek_client.model.UserProfileDto;
+import jdroidcoder.ua.taxi_bishkek_client.network.NetworkService;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
@@ -116,20 +115,39 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Subscribe
     public void onTypeEvent(TypePhoneEvent event) {
         final View view = LayoutInflater.from(this).inflate(R.layout.alert_style, null);
-        new AlertDialog.Builder(this)
+//        new AlertDialog.Builder(this)
+//                .setView(view)
+//                .setCancelable(false)
+//                .setPositiveButton("Save", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        EditText phoneET = (EditText) view.findViewById(R.id.phone);
+//                        if (!TextUtils.isEmpty(phoneET.getText().toString())) {
+//                            userProfileDto.setPhone(phoneET.getText().toString());
+//                            networkService.setDataToProfile(email, userProfileDto.getFirstName(),
+//                                    userProfileDto.getLastName(), userProfileDto.getPhone());
+//                            dialog.dismiss();
+//                        }
+//                    }
+//                }).show();
+        final AlertDialog alertDialog = new AlertDialog.Builder(this)
                 .setView(view)
-                .setCancelable(false)
-                .setPositiveButton("Save", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        EditText phoneET = (EditText) view.findViewById(R.id.phone);
-                        if (!TextUtils.isEmpty(phoneET.getText().toString())) {
-                            userProfileDto.setPhone(phoneET.getText().toString());
-                            networkService.setDataToProfile(email, userProfileDto.getFirstName(),
-                                    userProfileDto.getLastName(), userProfileDto.getPhone());
-                            dialog.dismiss();
-                        }
-                    }
-                }).show();
+                .create();
+        final EditText phoneET = (EditText) view.findViewById(R.id.phone);
+        phoneET.setText(UserProfileDto.User.getPhone());
+        view.findViewById(R.id.save).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText phoneET = (EditText) view.findViewById(R.id.phone);
+                if (!TextUtils.isEmpty(phoneET.getText().toString())) {
+                    userProfileDto.setPhone(phoneET.getText().toString());
+                    networkService.setDataToProfile(email, userProfileDto.getFirstName(),
+                            userProfileDto.getLastName(), userProfileDto.getPhone());
+                    alertDialog.dismiss();
+                }
+            }
+        });
+
+        alertDialog.show();
     }
 }

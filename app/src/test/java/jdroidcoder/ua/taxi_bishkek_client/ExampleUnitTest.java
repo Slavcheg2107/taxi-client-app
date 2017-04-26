@@ -1,4 +1,4 @@
-package jdroidcoder.ua.taxi_bishkek;
+package jdroidcoder.ua.taxi_bishkek_client;
 
 import org.junit.Test;
 

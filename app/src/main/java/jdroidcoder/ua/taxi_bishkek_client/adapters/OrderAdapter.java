@@ -1,4 +1,4 @@
-package jdroidcoder.ua.taxi_bishkek.adapters;
+package jdroidcoder.ua.taxi_bishkek_client.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import jdroidcoder.ua.taxi_bishkek.R;
-import jdroidcoder.ua.taxi_bishkek.model.OrderDto;
-import jdroidcoder.ua.taxi_bishkek.network.NetworkService;
+import jdroidcoder.ua.taxi_bishkek_client.R;
+import jdroidcoder.ua.taxi_bishkek_client.model.OrderDto;
+import jdroidcoder.ua.taxi_bishkek_client.network.NetworkService;
 
 /**
  * Created by jdroidcoder on 10.04.17.

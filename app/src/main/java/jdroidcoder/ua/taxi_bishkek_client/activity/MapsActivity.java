@@ -1,8 +1,6 @@
-package jdroidcoder.ua.taxi_bishkek.activity;
+package jdroidcoder.ua.taxi_bishkek_client.activity;
 
 import android.Manifest;
-import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -11,28 +9,23 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -42,9 +35,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -53,20 +43,19 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
-import jdroidcoder.ua.taxi_bishkek.R;
-import jdroidcoder.ua.taxi_bishkek.adapters.MarkerAdapter;
-import jdroidcoder.ua.taxi_bishkek.adapters.OrderAdapter;
-import jdroidcoder.ua.taxi_bishkek.events.ChangeLocationEvent;
-import jdroidcoder.ua.taxi_bishkek.events.ErrorMessageEvent;
-import jdroidcoder.ua.taxi_bishkek.events.OrderEvent;
-import jdroidcoder.ua.taxi_bishkek.events.UpdateAdapterEvent;
-import jdroidcoder.ua.taxi_bishkek.model.OrderDto;
-import jdroidcoder.ua.taxi_bishkek.model.UserProfileDto;
-import jdroidcoder.ua.taxi_bishkek.network.NetworkService;
-import jdroidcoder.ua.taxi_bishkek.service.LocationService;
+import jdroidcoder.ua.taxi_bishkek_client.R;
+import jdroidcoder.ua.taxi_bishkek_client.adapters.MarkerAdapter;
+import jdroidcoder.ua.taxi_bishkek_client.adapters.OrderAdapter;
+import jdroidcoder.ua.taxi_bishkek_client.events.ChangeLocationEvent;
+import jdroidcoder.ua.taxi_bishkek_client.events.ErrorMessageEvent;
+import jdroidcoder.ua.taxi_bishkek_client.events.OrderEvent;
+import jdroidcoder.ua.taxi_bishkek_client.events.UpdateAdapterEvent;
+import jdroidcoder.ua.taxi_bishkek_client.model.OrderDto;
+import jdroidcoder.ua.taxi_bishkek_client.model.UserProfileDto;
+import jdroidcoder.ua.taxi_bishkek_client.network.NetworkService;
+import jdroidcoder.ua.taxi_bishkek_client.service.LocationService;
 
-import static jdroidcoder.ua.taxi_bishkek.R.id.map;
-import static jdroidcoder.ua.taxi_bishkek.R.id.up;
+import static jdroidcoder.ua.taxi_bishkek_client.R.id.map;
 
 /**
  * Created by jdroidcoder on 07.04.17.
@@ -127,17 +116,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @OnClick(R.id.sendOrder)
     public void sendOrder() {
-        double[] pointACoordinate = getAddressLocation(fromET.getText().toString());
+        double[] pointACoordinate = getAddressLocation(getAddressLocation(location.getLatitude(), location.getLongitude())
+                + " " + fromET.getText().toString());
         double[] pointBCoordinate = getAddressLocation(toET.getText().toString());
         if (pointACoordinate != null && pointBCoordinate != null) {
             if (!TextUtils.isEmpty(fromET.getText().toString())
                     && !TextUtils.isEmpty(toET.getText().toString())) {
-                if(OrderDto.Oreders.getOrders().size()==0) {
+                if (OrderDto.Oreders.getOrders().size() == 0) {
                     networkService.makeOrder(fromET.getText().toString(),
                             toET.getText().toString(), new Date(),
                             pointACoordinate, pointBCoordinate);
                     orderView.setVisibility(View.GONE);
-                }else {
+                } else {
                     Toast.makeText(this, getString(R.string.you_are_have_order), Toast.LENGTH_LONG).show();
                 }
             } else {
@@ -165,19 +155,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private String getAddressLocation(double lat, double lng) {
-        Geocoder geoCoder = new Geocoder(this, Locale.getDefault());
+        Geocoder gcd = new Geocoder(this, Locale.getDefault());
+        String countryName = "";
+        List<Address> addresses = null;
         try {
-            List<Address> addresses = geoCoder.getFromLocation(lat, lng, 1);
-            if (addresses.size() > 0) {
-                return addresses.get(0).getAddressLine(0);
-            } else {
-                EventBus.getDefault().post(new ErrorMessageEvent("Address not found"));
-            }
+            addresses = gcd.getFromLocation(lat, lng, 1);
         } catch (IOException e) {
             e.printStackTrace();
-            EventBus.getDefault().post(new ErrorMessageEvent("Address not found"));
         }
-        return null;
+
+        if (addresses.size() > 0) {
+            countryName = addresses.get(0).getCountryName() + " " + addresses.get(0).getLocality();
+        }
+
+        return countryName;
     }
 
     @OnClick(R.id.doneOrder)
@@ -256,7 +247,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             mMap.setInfoWindowAdapter(new MarkerAdapter(this));
             networkService.setCoordinate(location.getLatitude(), location.getLongitude());
             mMap.setOnMarkerClickListener(this);
-            fromET.setText(getAddressLocation(location.getLatitude(), location.getLongitude()));
+//            fromET.setText(getAddressLocation(location.getLatitude(), location.getLongitude()));
         } catch (Exception e) {
 
         }

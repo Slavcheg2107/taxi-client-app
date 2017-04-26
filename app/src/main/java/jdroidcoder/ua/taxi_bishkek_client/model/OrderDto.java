@@ -1,4 +1,4 @@
-package jdroidcoder.ua.taxi_bishkek.model;
+package jdroidcoder.ua.taxi_bishkek_client.model;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
