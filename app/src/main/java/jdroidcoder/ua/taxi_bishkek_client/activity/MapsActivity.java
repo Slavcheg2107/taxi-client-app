@@ -87,14 +87,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         EventBus.getDefault().register(this);
         if (ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                    123);
+                == PackageManager.PERMISSION_GRANTED) {
+            startService(new Intent(this, LocationService.class));
         }
 
-        startService(new Intent(this, LocationService.class));
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(map);
         mapFragment.getMapAsync(this);
@@ -247,7 +243,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             mMap.setInfoWindowAdapter(new MarkerAdapter(this));
             networkService.setCoordinate(location.getLatitude(), location.getLongitude());
             mMap.setOnMarkerClickListener(this);
-//            fromET.setText(getAddressLocation(location.getLatitude(), location.getLongitude()));
         } catch (Exception e) {
 
         }

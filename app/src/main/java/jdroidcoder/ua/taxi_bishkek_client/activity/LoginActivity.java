@@ -1,7 +1,10 @@
 package jdroidcoder.ua.taxi_bishkek_client.activity;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -54,6 +57,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+        if (ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    123);
+        }
     }
 
     @Override
@@ -115,21 +126,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Subscribe
     public void onTypeEvent(TypePhoneEvent event) {
         final View view = LayoutInflater.from(this).inflate(R.layout.alert_style, null);
-//        new AlertDialog.Builder(this)
-//                .setView(view)
-//                .setCancelable(false)
-//                .setPositiveButton("Save", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        EditText phoneET = (EditText) view.findViewById(R.id.phone);
-//                        if (!TextUtils.isEmpty(phoneET.getText().toString())) {
-//                            userProfileDto.setPhone(phoneET.getText().toString());
-//                            networkService.setDataToProfile(email, userProfileDto.getFirstName(),
-//                                    userProfileDto.getLastName(), userProfileDto.getPhone());
-//                            dialog.dismiss();
-//                        }
-//                    }
-//                }).show();
         final AlertDialog alertDialog = new AlertDialog.Builder(this)
                 .setView(view)
                 .create();
