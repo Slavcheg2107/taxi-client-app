@@ -28,7 +28,10 @@
             </intent-filter>
         </activity>
 
-        <service android:name="jdroidcoder.ua.taxi_bishkek_client.service.LocationService" />
+        <service
+            android:name="jdroidcoder.ua.taxi_bishkek_client.service.LocationService"
+            android:enabled="true"
+            android:exported="true" />
 
         <activity android:name="jdroidcoder.ua.taxi_bishkek_client.activity.MapsActivity" />
 

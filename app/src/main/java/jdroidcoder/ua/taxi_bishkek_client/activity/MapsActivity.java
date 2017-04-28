@@ -238,7 +238,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
         try {
             location = ((LocationManager) getSystemService(LOCATION_SERVICE)).
-                    getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
             LatLng sydney = new LatLng(location.getLatitude(),
                     location.getLongitude());
             markerOptions = new MarkerOptions().position(sydney);
