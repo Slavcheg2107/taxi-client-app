@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private NetworkService networkService;
     private UserProfileDto userProfileDto = new UserProfileDto();
     private String email;
+    private boolean isSend = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,11 +97,16 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     private void handleSignInResult(GoogleSignInResult result) {
         if (result.isSuccess()) {
-            GoogleSignInAccount acct = result.getSignInAccount();
-            userProfileDto.setFirstName(acct.getGivenName());
-            userProfileDto.setLastName(acct.getFamilyName());
-            email = acct.getEmail();
-            networkService.register(acct.getEmail(), acct.getId());
+            if (!isSend) {
+                GoogleSignInAccount acct = result.getSignInAccount();
+                userProfileDto.setFirstName(acct.getGivenName());
+                userProfileDto.setLastName(acct.getFamilyName());
+                email = acct.getEmail();
+                isSend = true;
+                networkService.register(acct.getEmail(), acct.getId());
+            } else {
+                isSend = false;
+            }
         } else {
             Toast.makeText(this, getString(R.string.unknow_error), Toast.LENGTH_LONG).show();
         }
@@ -130,6 +136,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .setView(view)
                 .create();
         final EditText phoneET = (EditText) view.findViewById(R.id.phone);
+        phoneET.setTextColor(getResources().getColor(android.R.color.white));
         phoneET.setText(UserProfileDto.User.getPhone());
         view.findViewById(R.id.save).setOnClickListener(new View.OnClickListener() {
             @Override

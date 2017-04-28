@@ -112,23 +112,27 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @OnClick(R.id.sendOrder)
     public void sendOrder() {
-        double[] pointACoordinate = getAddressLocation(getAddressLocation(location.getLatitude(), location.getLongitude())
-                + " " + fromET.getText().toString());
-        double[] pointBCoordinate = getAddressLocation(toET.getText().toString());
-        if (pointACoordinate != null && pointBCoordinate != null) {
-            if (!TextUtils.isEmpty(fromET.getText().toString())
-                    && !TextUtils.isEmpty(toET.getText().toString())) {
-                if (OrderDto.Oreders.getOrders().size() == 0) {
-                    networkService.makeOrder(fromET.getText().toString(),
-                            toET.getText().toString(), new Date(),
-                            pointACoordinate, pointBCoordinate);
-                    orderView.setVisibility(View.GONE);
+        try {
+            double[] pointACoordinate = getAddressLocation(getAddressLocation(location.getLatitude(), location.getLongitude())
+                    + " " + fromET.getText().toString());
+            double[] pointBCoordinate = getAddressLocation(toET.getText().toString());
+            if (pointACoordinate != null && pointBCoordinate != null) {
+                if (!TextUtils.isEmpty(fromET.getText().toString())
+                        && !TextUtils.isEmpty(toET.getText().toString())) {
+                    if (OrderDto.Oreders.getOrders().size() == 0) {
+                        networkService.makeOrder(fromET.getText().toString(),
+                                toET.getText().toString(), new Date(),
+                                pointACoordinate, pointBCoordinate);
+                        orderView.setVisibility(View.GONE);
+                    } else {
+                        Toast.makeText(this, getString(R.string.you_are_have_order), Toast.LENGTH_LONG).show();
+                    }
                 } else {
-                    Toast.makeText(this, getString(R.string.you_are_have_order), Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, getString(R.string.empty_order), Toast.LENGTH_LONG).show();
                 }
-            } else {
-                Toast.makeText(this, getString(R.string.empty_order), Toast.LENGTH_LONG).show();
             }
+        }catch (Exception e){
+            Toast.makeText(this, getString(R.string.unknow_error), Toast.LENGTH_LONG).show();
         }
     }
 

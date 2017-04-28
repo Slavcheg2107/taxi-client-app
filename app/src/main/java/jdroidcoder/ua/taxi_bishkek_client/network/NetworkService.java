@@ -69,11 +69,15 @@ public class NetworkService {
         call.enqueue(new Callback<UserProfileDto>() {
             @Override
             public void onResponse(Call<UserProfileDto> call, Response<UserProfileDto> response) {
-                UserProfileDto.User.setPhone(response.body().getPhone());
-                UserProfileDto.User.setFirstName(response.body().getFirstName());
-                UserProfileDto.User.setLastName(response.body().getLastName());
-                UserProfileDto.User.setEmail(response.body().getEmail());
-                EventBus.getDefault().post(new MoveNextEvent());
+                try {
+                    UserProfileDto.User.setPhone(response.body().getPhone());
+                    UserProfileDto.User.setFirstName(response.body().getFirstName());
+                    UserProfileDto.User.setLastName(response.body().getLastName());
+                    UserProfileDto.User.setEmail(response.body().getEmail());
+                    EventBus.getDefault().post(new MoveNextEvent());
+                }catch (Exception e){
+                    EventBus.getDefault().post(new ErrorMessageEvent("Your phone used"));
+                }
             }
 
             @Override

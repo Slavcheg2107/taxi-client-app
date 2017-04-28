@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by jdroidcoder on 07.04.17.
  */
 public class RetrofitConfig {
-    private final static String BASE_URL = "http://192.168.1.100:4547/";
+    private final static String BASE_URL = "http://192.168.1.101:4547/";
     private Retrofit retrofit = new Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(BASE_URL)
