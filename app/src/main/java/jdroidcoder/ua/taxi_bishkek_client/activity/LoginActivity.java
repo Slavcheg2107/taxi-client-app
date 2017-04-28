@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 isSend = false;
             }
         } else {
-            Toast.makeText(this, getString(R.string.unknow_error), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.internet_error), Toast.LENGTH_LONG).show();
         }
     }
 
