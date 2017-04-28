@@ -75,7 +75,7 @@ public class NetworkService {
                     UserProfileDto.User.setLastName(response.body().getLastName());
                     UserProfileDto.User.setEmail(response.body().getEmail());
                     EventBus.getDefault().post(new MoveNextEvent());
-                }catch (Exception e){
+                } catch (Exception e) {
                     EventBus.getDefault().post(new ErrorMessageEvent("Your phone used"));
                 }
             }
@@ -126,10 +126,8 @@ public class NetworkService {
         call.enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                if (response.body()) {
-                    OrderDto.Oreders.getOrders().remove(orderDto);
-                    EventBus.getDefault().post(new UpdateAdapterEvent());
-                }
+                OrderDto.Oreders.getOrders().remove(orderDto);
+                EventBus.getDefault().post(new UpdateAdapterEvent());
             }
 
             @Override
