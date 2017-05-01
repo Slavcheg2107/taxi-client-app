@@ -99,8 +99,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
         orderAdapter = new OrderAdapter(this);
         listView.setAdapter(orderAdapter);
-        snackbar = Snackbar.make(getLayoutInflater().inflate(R.layout.maps_activity, null)
-                , "Connection error", Snackbar.LENGTH_INDEFINITE);
+        snackbar = Snackbar.make(listView, "Connection error", Snackbar.LENGTH_INDEFINITE);
 
     }
 
@@ -119,62 +118,23 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @OnClick(R.id.sendOrder)
     public void sendOrder() {
         try {
-            double[] pointACoordinate = getAddressLocation(getAddressLocation(location.getLatitude(), location.getLongitude())
-                    + " " + fromET.getText().toString());
-            double[] pointBCoordinate = getAddressLocation(toET.getText().toString());
-            if (pointACoordinate != null && pointBCoordinate != null) {
-                if (!TextUtils.isEmpty(fromET.getText().toString())
-                        && !TextUtils.isEmpty(toET.getText().toString())) {
-                    if (OrderDto.Oreders.getOrders().size() == 0) {
-                        networkService.makeOrder(fromET.getText().toString(),
-                                toET.getText().toString(), new Date(),
-                                pointACoordinate, pointBCoordinate);
-                        orderView.setVisibility(View.GONE);
-                    } else {
-                        Toast.makeText(this, getString(R.string.you_are_have_order), Toast.LENGTH_LONG).show();
-                    }
+            if (!TextUtils.isEmpty(fromET.getText().toString())
+                    && !TextUtils.isEmpty(toET.getText().toString())) {
+                if (OrderDto.Oreders.getOrders().size() == 0) {
+                    networkService.makeOrder(fromET.getText().toString(),
+                            toET.getText().toString(), new Date(),
+                            (location == null) ? null :
+                                    new double[]{location.getLatitude(), location.getLongitude()}, null);
+                    orderView.setVisibility(View.GONE);
                 } else {
-                    Toast.makeText(this, getString(R.string.empty_order), Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, getString(R.string.you_are_have_order), Toast.LENGTH_LONG).show();
                 }
+            } else {
+                Toast.makeText(this, getString(R.string.empty_order), Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
             Toast.makeText(this, getString(R.string.unknow_error), Toast.LENGTH_LONG).show();
         }
-    }
-
-    private double[] getAddressLocation(String address) {
-        Geocoder geoCoder = new Geocoder(this, Locale.getDefault());
-        try {
-            List<Address> addresses = geoCoder.getFromLocationName(address, 5);
-            if (addresses.size() > 0) {
-                Double lat = addresses.get(0).getLatitude();
-                Double lon = addresses.get(0).getLongitude();
-                return new double[]{lat, lon};
-            } else {
-                EventBus.getDefault().post(new ErrorMessageEvent("Address not found"));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            EventBus.getDefault().post(new ErrorMessageEvent("Address not found"));
-        }
-        return null;
-    }
-
-    private String getAddressLocation(double lat, double lng) {
-        Geocoder gcd = new Geocoder(this, Locale.getDefault());
-        String countryName = "";
-        List<Address> addresses = null;
-        try {
-            addresses = gcd.getFromLocation(lat, lng, 1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if (addresses.size() > 0) {
-            countryName = addresses.get(0).getCountryName() + " " + addresses.get(0).getLocality();
-        }
-
-        return countryName;
     }
 
     @OnClick(R.id.doneOrder)
