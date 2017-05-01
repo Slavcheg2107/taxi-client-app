@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Taxi-bishkek-client</string>
-    <string name="unknow_error">Unknow error</string>
+    <string name="unknow_error">Unknowing error</string>
     <string name="internet_error">Turn on internet connection</string>
     <string name="typeYourPhone">Type your phone</string>
     <string name="google_play_services_version">AIzaSyDUwhlpulPNHCtw2iYVHQnF6tLd3k-Egsw</string>

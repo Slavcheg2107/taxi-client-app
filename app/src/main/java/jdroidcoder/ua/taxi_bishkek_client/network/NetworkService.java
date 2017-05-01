@@ -51,16 +51,20 @@ public class NetworkService {
         call.enqueue(new Callback<UserProfileDto>() {
             @Override
             public void onResponse(Call<UserProfileDto> call, Response<UserProfileDto> response) {
-                UserProfileDto.User.setPhone(response.body().getPhone());
-                UserProfileDto.User.setFirstName(response.body().getFirstName());
-                UserProfileDto.User.setLastName(response.body().getLastName());
-                UserProfileDto.User.setEmail(response.body().getEmail());
-                EventBus.getDefault().post(new MoveNextEvent());
+                try {
+                    UserProfileDto.User.setPhone(response.body().getPhone());
+                    UserProfileDto.User.setFirstName(response.body().getFirstName());
+                    UserProfileDto.User.setLastName(response.body().getLastName());
+                    UserProfileDto.User.setEmail(response.body().getEmail());
+                    EventBus.getDefault().post(new MoveNextEvent());
+                } catch (Exception e) {
+                    EventBus.getDefault().post(new ErrorMessageEvent("Unknowing error"));
+                }
             }
 
             @Override
             public void onFailure(Call<UserProfileDto> call, Throwable t) {
-                EventBus.getDefault().post(new ErrorMessageEvent(t.getMessage()));
+                EventBus.getDefault().post(new ErrorMessageEvent("Unknowing error"));
             }
         });
     }
@@ -99,7 +103,7 @@ public class NetworkService {
                     OrderDto.Oreders.add(response.body());
                     EventBus.getDefault().post(new OrderEvent());
                     EventBus.getDefault().post(new ErrorMessageEvent("Order is created"));
-                }catch (Exception e){
+                } catch (Exception e) {
                     EventBus.getDefault().post(new ErrorMessageEvent("You are have order"));
                 }
             }
