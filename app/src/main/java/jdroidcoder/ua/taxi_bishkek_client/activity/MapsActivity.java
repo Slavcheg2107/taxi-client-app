@@ -8,6 +8,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -47,6 +48,7 @@ import jdroidcoder.ua.taxi_bishkek_client.R;
 import jdroidcoder.ua.taxi_bishkek_client.adapters.MarkerAdapter;
 import jdroidcoder.ua.taxi_bishkek_client.adapters.OrderAdapter;
 import jdroidcoder.ua.taxi_bishkek_client.events.ChangeLocationEvent;
+import jdroidcoder.ua.taxi_bishkek_client.events.ConnectionErrorEvent;
 import jdroidcoder.ua.taxi_bishkek_client.events.ErrorMessageEvent;
 import jdroidcoder.ua.taxi_bishkek_client.events.OrderEvent;
 import jdroidcoder.ua.taxi_bishkek_client.events.UpdateAdapterEvent;
@@ -77,6 +79,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private NetworkService networkService;
     private OrderAdapter orderAdapter;
     private Location location;
+    private Snackbar snackbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +99,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
         orderAdapter = new OrderAdapter(this);
         listView.setAdapter(orderAdapter);
+        snackbar = Snackbar.make(getLayoutInflater().inflate(R.layout.maps_activity, null)
+                , "Connection error", Snackbar.LENGTH_INDEFINITE);
+
     }
 
     @OnClick(R.id.makeOrder)
@@ -131,7 +137,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     Toast.makeText(this, getString(R.string.empty_order), Toast.LENGTH_LONG).show();
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             Toast.makeText(this, getString(R.string.unknow_error), Toast.LENGTH_LONG).show();
         }
     }
@@ -294,8 +300,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         return super.onOptionsItemSelected(item);
     }
 
-    @OnTextChanged(R.id.toET)
-    public void streets() {
-
+    @Subscribe
+    public void onConnectionErrorEvent(ConnectionErrorEvent connectionErrorEvent) {
+        if (!snackbar.isShown()) {
+            snackbar.show();
+        }
     }
 }

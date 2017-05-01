@@ -5,6 +5,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.Date;
 import java.util.List;
 
+import jdroidcoder.ua.taxi_bishkek_client.events.ConnectionErrorEvent;
 import jdroidcoder.ua.taxi_bishkek_client.events.ErrorMessageEvent;
 import jdroidcoder.ua.taxi_bishkek_client.events.MoveNextEvent;
 import jdroidcoder.ua.taxi_bishkek_client.events.OrderEvent;
@@ -146,7 +147,7 @@ public class NetworkService {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                EventBus.getDefault().post(new ErrorMessageEvent(t.getMessage()));
+                EventBus.getDefault().post(new ConnectionErrorEvent());
             }
         });
     }
