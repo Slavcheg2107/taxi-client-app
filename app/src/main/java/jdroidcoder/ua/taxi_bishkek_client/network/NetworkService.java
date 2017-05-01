@@ -95,9 +95,13 @@ public class NetworkService {
         call.enqueue(new Callback<OrderDto>() {
             @Override
             public void onResponse(Call<OrderDto> call, Response<OrderDto> response) {
-                OrderDto.Oreders.add(response.body());
-                EventBus.getDefault().post(new OrderEvent());
-                EventBus.getDefault().post(new ErrorMessageEvent("Order is created"));
+                try {
+                    OrderDto.Oreders.add(response.body());
+                    EventBus.getDefault().post(new OrderEvent());
+                    EventBus.getDefault().post(new ErrorMessageEvent("Order is created"));
+                }catch (Exception e){
+                    EventBus.getDefault().post(new ErrorMessageEvent("You are have order"));
+                }
             }
 
             @Override
