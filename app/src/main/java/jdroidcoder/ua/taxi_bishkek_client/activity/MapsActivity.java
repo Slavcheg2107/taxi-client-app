@@ -163,6 +163,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         LatLng sydney = new LatLng(changeLocationEvent.getLocation().getLatitude(),
                 changeLocationEvent.getLocation().getLongitude());
         markerOptions.position(sydney);
+        networkService.getOrders(UserProfileDto.User.getPhone());
     }
 
     @Subscribe
@@ -223,41 +224,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public boolean onMarkerClick(Marker marker) {
         marker.showInfoWindow();
         return false;
-    }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        final View view = LayoutInflater.from(this).inflate(R.layout.alert_style, null);
-        if (item.getItemId() == R.id.changeNumber) {
-            final AlertDialog alertDialog = new AlertDialog.Builder(this)
-                    .setView(view)
-                    .create();
-
-            final EditText phoneET = (EditText) view.findViewById(R.id.phone);
-            phoneET.setText(UserProfileDto.User.getPhone());
-            view.findViewById(R.id.save).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!TextUtils.isEmpty(phoneET.getText().toString())) {
-                        UserProfileDto.User.setPhone(phoneET.getText().toString());
-                        networkService.setDataToProfile(UserProfileDto.User.getEmail(),
-                                UserProfileDto.User.getFirstName(),
-                                UserProfileDto.User.getLastName(),
-                                UserProfileDto.User.getPhone());
-                        alertDialog.dismiss();
-                    }
-                }
-            });
-
-            alertDialog.show();
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Subscribe
