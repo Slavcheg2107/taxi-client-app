@@ -1,5 +1,7 @@
 package jdroidcoder.ua.taxi_bishkek_client.activity;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -8,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,10 +63,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .build();
         if (ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_PHONE_STATE)
                 != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
+                            android.Manifest.permission.READ_PHONE_STATE},
                     123);
         }
     }
@@ -131,26 +137,31 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @Subscribe
     public void onTypeEvent(TypePhoneEvent event) {
-        final View view = LayoutInflater.from(this).inflate(R.layout.alert_style, null);
-        final AlertDialog alertDialog = new AlertDialog.Builder(this)
-                .setView(view)
-                .create();
-        final EditText phoneET = (EditText) view.findViewById(R.id.phone);
-        phoneET.setTextColor(getResources().getColor(android.R.color.white));
-        phoneET.setText(UserProfileDto.User.getPhone());
-        view.findViewById(R.id.save).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText phoneET = (EditText) view.findViewById(R.id.phone);
-                if (!TextUtils.isEmpty(phoneET.getText().toString())) {
-                    userProfileDto.setPhone(phoneET.getText().toString());
-                    networkService.setDataToProfile(email, userProfileDto.getFirstName(),
-                            userProfileDto.getLastName(), userProfileDto.getPhone());
-                    alertDialog.dismiss();
-                }
-            }
-        });
-
-        alertDialog.show();
+//        final View view = LayoutInflater.from(this).inflate(R.layout.alert_style, null);
+//        final AlertDialog alertDialog = new AlertDialog.Builder(this)
+//                .setView(view)
+//                .create();
+//        final EditText phoneET = (EditText) view.findViewById(R.id.phone);
+//        phoneET.setTextColor(getResources().getColor(android.R.color.white));
+//        phoneET.setText(UserProfileDto.User.getPhone());
+//        view.findViewById(R.id.save).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                EditText phoneET = (EditText) view.findViewById(R.id.phone);
+//                if (!TextUtils.isEmpty(phoneET.getText().toString())) {
+        TelephonyManager tMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        String mPhoneNumber = tMgr.getLine1Number();
+        System.out.println(mPhoneNumber);
+        userProfileDto.setPhone(mPhoneNumber);
+        networkService.setDataToProfile(email, userProfileDto.getFirstName(),
+                userProfileDto.getLastName(), userProfileDto.getPhone());
+        userProfileDto.setPhone(mPhoneNumber);
+        networkService.setDataToProfile(email, userProfileDto.getFirstName(),
+                userProfileDto.getLastName(), userProfileDto.getPhone());
+//                }
+//            }
+//        });
+//
+//        alertDialog.show();
     }
 }
