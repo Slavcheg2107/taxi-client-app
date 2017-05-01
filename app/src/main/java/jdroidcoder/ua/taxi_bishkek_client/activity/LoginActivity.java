@@ -137,31 +137,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @Subscribe
     public void onTypeEvent(TypePhoneEvent event) {
-//        final View view = LayoutInflater.from(this).inflate(R.layout.alert_style, null);
-//        final AlertDialog alertDialog = new AlertDialog.Builder(this)
-//                .setView(view)
-//                .create();
-//        final EditText phoneET = (EditText) view.findViewById(R.id.phone);
-//        phoneET.setTextColor(getResources().getColor(android.R.color.white));
-//        phoneET.setText(UserProfileDto.User.getPhone());
-//        view.findViewById(R.id.save).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                EditText phoneET = (EditText) view.findViewById(R.id.phone);
-//                if (!TextUtils.isEmpty(phoneET.getText().toString())) {
         TelephonyManager tMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         String mPhoneNumber = tMgr.getLine1Number();
-        System.out.println(mPhoneNumber);
+        userProfileDto.setPhone(mPhoneNumber);
         userProfileDto.setPhone(mPhoneNumber);
         networkService.setDataToProfile(email, userProfileDto.getFirstName(),
                 userProfileDto.getLastName(), userProfileDto.getPhone());
-        userProfileDto.setPhone(mPhoneNumber);
-        networkService.setDataToProfile(email, userProfileDto.getFirstName(),
-                userProfileDto.getLastName(), userProfileDto.getPhone());
-//                }
-//            }
-//        });
-//
-//        alertDialog.show();
     }
 }
