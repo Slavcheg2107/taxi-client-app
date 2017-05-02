@@ -89,7 +89,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private NetworkService networkService;
     private OrderAdapter orderAdapter;
     private Location location;
-    private boolean isShowSnackbar = false;
+    private boolean isConnectionError = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,13 +113,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @OnClick(R.id.makeOrder)
     public void makeOrder() {
-        if (orders.getVisibility() == View.VISIBLE) {
-            orders.setVisibility(View.GONE);
-        }
-        if (orderView.getVisibility() == View.VISIBLE) {
-            orderView.setVisibility(View.GONE);
-        } else {
-            orderView.setVisibility(View.VISIBLE);
+        if (!isConnectionError) {
+            if (orders.getVisibility() == View.VISIBLE) {
+                orders.setVisibility(View.GONE);
+            }
+            if (orderView.getVisibility() == View.VISIBLE) {
+                orderView.setVisibility(View.GONE);
+            } else {
+                orderView.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -147,13 +149,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @OnClick(R.id.doneOrder)
     public void doneOrder() {
-        if (orderView.getVisibility() == View.VISIBLE) {
-            orderView.setVisibility(View.GONE);
-        }
-        if (orders.getVisibility() == View.GONE) {
-            orders.setVisibility(View.VISIBLE);
-        } else {
-            orders.setVisibility(View.GONE);
+        if (!isConnectionError) {
+            if (orderView.getVisibility() == View.VISIBLE) {
+                orderView.setVisibility(View.GONE);
+            }
+            if (orders.getVisibility() == View.GONE) {
+                orders.setVisibility(View.VISIBLE);
+            } else {
+                orders.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -236,11 +240,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Subscribe
     public void onConnectionErrorEvent(ConnectionErrorEvent connectionErrorEvent) {
+        isConnectionError = connectionErrorEvent.isShow();
         if (connectionErrorEvent.isShow()) {
             connectionError.setVisibility(View.VISIBLE);
-//            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) buttons.getLayoutParams();
-//            layoutParams.setMargins(0, 0, 0, 100);
-//            buttons.setLayoutParams(layoutParams);
         } else {
             connectionError.setVisibility(View.GONE);
         }
