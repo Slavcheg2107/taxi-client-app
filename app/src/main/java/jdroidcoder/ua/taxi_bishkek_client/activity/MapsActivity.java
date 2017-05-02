@@ -60,6 +60,7 @@ import jdroidcoder.ua.taxi_bishkek_client.model.OrderDto;
 import jdroidcoder.ua.taxi_bishkek_client.model.UserProfileDto;
 import jdroidcoder.ua.taxi_bishkek_client.network.NetworkService;
 import jdroidcoder.ua.taxi_bishkek_client.service.LocationService;
+import jdroidcoder.ua.taxi_bishkek_client.service.UpdateOrdersService;
 
 import static jdroidcoder.ua.taxi_bishkek_client.R.id.button;
 import static jdroidcoder.ua.taxi_bishkek_client.R.id.map;
@@ -103,6 +104,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 == PackageManager.PERMISSION_GRANTED) {
             startService(new Intent(this, LocationService.class));
         }
+        startService(new Intent(this, UpdateOrdersService.class));
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(map);
@@ -163,6 +165,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     protected void onDestroy() {
+        UpdateOrdersService.isRun = false;
+        stopService(new Intent(this, UpdateOrdersService.class));
         stopService(new Intent(this, LocationService.class));
         EventBus.getDefault().unregister(this);
         super.onDestroy();
@@ -175,7 +179,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         LatLng sydney = new LatLng(changeLocationEvent.getLocation().getLatitude(),
                 changeLocationEvent.getLocation().getLongitude());
         markerOptions.position(sydney);
-        networkService.getOrders(UserProfileDto.User.getPhone());
     }
 
     @Subscribe
