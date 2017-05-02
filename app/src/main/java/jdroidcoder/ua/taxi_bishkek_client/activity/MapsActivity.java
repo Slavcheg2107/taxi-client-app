@@ -18,9 +18,13 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -57,7 +61,9 @@ import jdroidcoder.ua.taxi_bishkek_client.model.UserProfileDto;
 import jdroidcoder.ua.taxi_bishkek_client.network.NetworkService;
 import jdroidcoder.ua.taxi_bishkek_client.service.LocationService;
 
+import static jdroidcoder.ua.taxi_bishkek_client.R.id.button;
 import static jdroidcoder.ua.taxi_bishkek_client.R.id.map;
+import static jdroidcoder.ua.taxi_bishkek_client.R.id.orderView;
 
 /**
  * Created by jdroidcoder on 07.04.17.
@@ -76,10 +82,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     EditText toET;
     @BindView(R.id.orderListView)
     ListView listView;
+    @BindView(R.id.buttons)
+    LinearLayout buttons;
+    @BindView(R.id.connection_error)
+    TextView connectionError;
     private NetworkService networkService;
     private OrderAdapter orderAdapter;
     private Location location;
-    private Snackbar snackbar;
+    private boolean isShowSnackbar = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,8 +109,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
         orderAdapter = new OrderAdapter(this);
         listView.setAdapter(orderAdapter);
-        snackbar = Snackbar.make(listView, "Connection error", Snackbar.LENGTH_INDEFINITE);
-
     }
 
     @OnClick(R.id.makeOrder)
@@ -228,8 +236,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Subscribe
     public void onConnectionErrorEvent(ConnectionErrorEvent connectionErrorEvent) {
-        if (!snackbar.isShown()) {
-            snackbar.show();
+        if (connectionErrorEvent.isShow()) {
+            connectionError.setVisibility(View.VISIBLE);
+//            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) buttons.getLayoutParams();
+//            layoutParams.setMargins(0, 0, 0, 100);
+//            buttons.setLayoutParams(layoutParams);
+        } else {
+            connectionError.setVisibility(View.GONE);
         }
     }
 }

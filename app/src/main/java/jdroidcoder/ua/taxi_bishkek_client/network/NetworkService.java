@@ -121,11 +121,12 @@ public class NetworkService {
             @Override
             public void onResponse(Call<List<OrderDto>> call, Response<List<OrderDto>> response) {
                 OrderDto.Oreders.setItems(response.body());
+                EventBus.getDefault().post(new ConnectionErrorEvent(false));
             }
 
             @Override
             public void onFailure(Call<List<OrderDto>> call, Throwable t) {
-                EventBus.getDefault().post(new ConnectionErrorEvent());
+                EventBus.getDefault().post(new ConnectionErrorEvent(true));
             }
         });
     }
@@ -151,11 +152,12 @@ public class NetworkService {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
+                EventBus.getDefault().post(new ConnectionErrorEvent(false));
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                EventBus.getDefault().post(new ConnectionErrorEvent());
+                EventBus.getDefault().post(new ConnectionErrorEvent(true));
             }
         });
     }
