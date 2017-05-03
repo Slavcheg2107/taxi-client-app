@@ -41,7 +41,7 @@ public class NetworkService {
 
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
-                EventBus.getDefault().post(new ErrorMessageEvent(t.getMessage()));
+                EventBus.getDefault().post(new ConnectionErrorEvent(true));
             }
         });
     }
@@ -87,7 +87,7 @@ public class NetworkService {
 
             @Override
             public void onFailure(Call<UserProfileDto> call, Throwable t) {
-                EventBus.getDefault().post(new ErrorMessageEvent(t.getMessage()));
+                EventBus.getDefault().post(new ConnectionErrorEvent(true));
             }
         });
     }

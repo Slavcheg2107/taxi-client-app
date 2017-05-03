@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -30,6 +31,7 @@ import org.greenrobot.eventbus.Subscribe;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jdroidcoder.ua.taxi_bishkek_client.R;
+import jdroidcoder.ua.taxi_bishkek_client.events.ConnectionErrorEvent;
 import jdroidcoder.ua.taxi_bishkek_client.events.ErrorMessageEvent;
 import jdroidcoder.ua.taxi_bishkek_client.events.MoveNextEvent;
 import jdroidcoder.ua.taxi_bishkek_client.events.TypePhoneEvent;
@@ -143,5 +145,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         userProfileDto.setPhone(mPhoneNumber);
         networkService.setDataToProfile(email, userProfileDto.getFirstName(),
                 userProfileDto.getLastName(), userProfileDto.getPhone());
+    }
+
+    @Subscribe
+    public void onConnectionErrorEvent(ConnectionErrorEvent connectionErrorEvent) {
+        Snackbar.make(findViewById(R.id.sign_in_button),
+                getResources().getString(R.string.connection_error), Snackbar.LENGTH_INDEFINITE).show();
     }
 }
