@@ -40,14 +40,18 @@ public class OrderAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         final OrderDto orderDto = OrderDto.Oreders.getOrders().get(position);
         convertView = LayoutInflater.from(context).inflate(R.layout.order_list_style, parent, false);
-        ((TextView) convertView.findViewById(R.id.addressTV)).setText(orderDto.getPoints());
-        ((TextView) convertView.findViewById(R.id.whenTV)).setText(orderDto.getTime());
-        convertView.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new NetworkService().removeOrder(orderDto);
-            }
-        });
+        try {
+            ((TextView) convertView.findViewById(R.id.addressTV)).setText(orderDto.getPoints());
+            ((TextView) convertView.findViewById(R.id.whenTV)).setText(orderDto.getTime());
+            convertView.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new NetworkService().removeOrder(orderDto);
+                }
+            });
+        } catch (Exception e) {
+            convertView.setVisibility(View.GONE);
+        }
         return convertView;
     }
 }
