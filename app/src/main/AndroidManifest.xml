@@ -22,7 +22,6 @@
         <activity
             android:name="jdroidcoder.ua.taxi_bishkek_client.activity.LoginActivity"
             android:screenOrientation="portrait"
-
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

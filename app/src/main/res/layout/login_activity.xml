@@ -61,7 +61,7 @@
             android:background="#ffb440"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Enter>>"
+            android:text="ВОЙТИ>>"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="24dp" />
 
