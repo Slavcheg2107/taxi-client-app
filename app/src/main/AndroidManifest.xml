@@ -8,7 +8,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
     <permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
@@ -21,7 +20,6 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="jdroidcoder.ua.taxi_bishkek_client.activity.LoginActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,11 +32,8 @@
             android:name="jdroidcoder.ua.taxi_bishkek_client.service.LocationService"
             android:enabled="true"
             android:exported="true" />
-        <service android:name=".service.UpdateOrdersService" />
 
-        <activity
-            android:name="jdroidcoder.ua.taxi_bishkek_client.activity.MapsActivity"
-            android:screenOrientation="portrait" />
+        <activity android:name="jdroidcoder.ua.taxi_bishkek_client.activity.MapsActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
