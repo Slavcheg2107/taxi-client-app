@@ -97,7 +97,6 @@ public class OrderDto {
         if (userPhone != null ? !userPhone.equals(orderDto.userPhone) : orderDto.userPhone != null)
             return false;
         return status != null ? status.equals(orderDto.status) : orderDto.status == null;
-
     }
 
     @Override
