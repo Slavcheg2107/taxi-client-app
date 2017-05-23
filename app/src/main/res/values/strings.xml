@@ -11,6 +11,6 @@
     <string name="done_order_label">Завершить заказ</string>
     <string name="empty_order">All feild must be full</string>
     <string name="changeNumber">Change number</string>
-    <string name="you_are_have_order">You are have order</string>
+    <string name="you_are_have_order">Вы еще не завершили предыдущий заказ</string>
     <string name="connection_error">Подключи интернет</string>
 </resources>
