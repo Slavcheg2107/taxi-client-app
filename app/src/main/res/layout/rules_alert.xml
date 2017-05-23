@@ -41,7 +41,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        android:text="Нажмите: Сделать заказ."
+        android:text="@string/make_order"
         android:textColor="#373737"
         android:textSize="16sp" />
 
@@ -121,7 +121,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        android:text="После поездки нажмите кнопку Завершить заказ."
+        android:text="@string/done_order_button"
         android:textColor="#373737"
         android:textSize="16sp" />
 </LinearLayout>

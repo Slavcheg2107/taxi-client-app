@@ -13,4 +13,6 @@
     <string name="changeNumber">Change number</string>
     <string name="you_are_have_order">Вы еще не завершили предыдущий заказ</string>
     <string name="connection_error">Подключи интернет</string>
+    <string name="done_order_button">После поездки нажмите кнопку \"Завершить заказ\".</string>
+    <string name="make_order">Нажмите: \"Сделать заказ\".</string>
 </resources>
