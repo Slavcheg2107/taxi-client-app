@@ -78,7 +78,7 @@ public class OrderDto {
     }
 
     public String getPoints() {
-        return getPointA() + "\n\n" + getPointB() + "\n";
+        return "от "+getPointA() + "\n\n до" + getPointB() + "\n";
     }
 
     @Override
