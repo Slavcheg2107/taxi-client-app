@@ -20,6 +20,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="jdroidcoder.ua.taxi_bishkek_client.activity.LoginActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,7 +34,8 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name="jdroidcoder.ua.taxi_bishkek_client.activity.MapsActivity" />
+        <activity android:name="jdroidcoder.ua.taxi_bishkek_client.activity.MapsActivity"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
