@@ -61,9 +61,9 @@
             android:background="#ffb440"
             android:gravity="center"
             android:padding="10dp"
-            android:text="ВОЙТИ>>"
+            android:text="Вход"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="24dp" />
+            android:textSize="18dp" />
 
     </RelativeLayout>
 </LinearLayout>

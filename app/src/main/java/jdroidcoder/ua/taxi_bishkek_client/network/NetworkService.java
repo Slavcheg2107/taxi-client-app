@@ -102,9 +102,9 @@ public class NetworkService {
                 try {
                     OrderDto.Oreders.add(response.body());
                     EventBus.getDefault().post(new OrderEvent());
-                    EventBus.getDefault().post(new ErrorMessageEvent("Order is created"));
+                    EventBus.getDefault().post(new ErrorMessageEvent("Ожидайте звонка водителя"));
                 } catch (Exception e) {
-                    EventBus.getDefault().post(new ErrorMessageEvent("You are have order"));
+                    EventBus.getDefault().post(new ErrorMessageEvent("Вы еще не завершили предыдущий заказ"));
                 }
             }
 
