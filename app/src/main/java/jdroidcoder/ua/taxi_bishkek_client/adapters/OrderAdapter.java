@@ -41,8 +41,8 @@ public class OrderAdapter extends BaseAdapter {
         final OrderDto orderDto = OrderDto.Oreders.getOrders().get(position);
         convertView = LayoutInflater.from(context).inflate(R.layout.order_list_style, parent, false);
         try {
-            ((TextView) convertView.findViewById(R.id.addressTV)).setText(orderDto.getPoints());
-            ((TextView) convertView.findViewById(R.id.whenTV)).setText(orderDto.getTime());
+            ((TextView) convertView.findViewById(R.id.addressTV)).setText("от " + orderDto.getPoints());
+            ((TextView) convertView.findViewById(R.id.whenTV)).setText("до " + orderDto.getTime());
             convertView.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
