@@ -1,33 +1,35 @@
 {
   "project_info": {
-    "project_number": "709222755350",
-    "project_id": "bishkek-taxi-client"
+    "project_number": "639409880035",
+    "firebase_url": "https://taxi-bishkek-client.firebaseio.com",
+    "project_id": "taxi-bishkek-client",
+    "storage_bucket": "taxi-bishkek-client.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:709222755350:android:cbca1cbd4783f804",
+        "mobilesdk_app_id": "1:639409880035:android:cbca1cbd4783f804",
         "android_client_info": {
           "package_name": "jdroidcoder.ua.taxi_bishkek_client"
         }
       },
       "oauth_client": [
         {
-          "client_id": "709222755350-ug2e93n7sffvtq2pcni32hldcjj3ifcf.apps.googleusercontent.com",
+          "client_id": "639409880035-ld2ds22rfetgktvg22sfdm13gfnmglte.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "jdroidcoder.ua.taxi_bishkek_client",
-            "certificate_hash": "be9d5276b01188d331bb0fa70932bf09e60c5a5f"
+            "certificate_hash": "a3b2f554cfa27b856f71d24c51a2c153a56432d1"
           }
         },
         {
-          "client_id": "709222755350-cd9k91rbneqld01vqj3rv0nntktv860d.apps.googleusercontent.com",
+          "client_id": "639409880035-ljcijjctnj8eleosrrdo2gacs3jkf0s8.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA-8mPv4AQYSKsWzfNnsVwTP_3x5S7DUB8"
+          "current_key": "AIzaSyBaoL4uqNaMH35v8HQYuTOaD4E46LnCH4Y"
         }
       ],
       "services": {
@@ -35,11 +37,16 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "639409880035-ljcijjctnj8eleosrrdo2gacs3jkf0s8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }

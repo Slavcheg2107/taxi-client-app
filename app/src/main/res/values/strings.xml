@@ -11,7 +11,7 @@
     <string name="done_order_label">Я доехал</string>
     <string name="empty_order">Все поля должны быть заполнены</string>
     <string name="changeNumber">Change number</string>
-    <string name="you_are_have_order">Вы еще не завершили предыдущий заказ</string>
+    <string name="you_are_have_order">Неужели вы доехали? А кнопку не нажали!</string>
     <string name="connection_error">Подключите интернет</string>
     <string name="done_order_button">После поездки нажмите кнопку \"Завершить заказ\".</string>
     <string name="make_order">Нажмите: \"Сделать заказ\".</string>
