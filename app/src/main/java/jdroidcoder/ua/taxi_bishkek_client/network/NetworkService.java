@@ -58,13 +58,13 @@ public class NetworkService {
                     UserProfileDto.User.setEmail(response.body().getEmail());
                     EventBus.getDefault().post(new MoveNextEvent());
                 } catch (Exception e) {
-                    EventBus.getDefault().post(new ErrorMessageEvent("Unknowing error"));
+                    EventBus.getDefault().post(new ErrorMessageEvent("Неизвестная ошибка"));
                 }
             }
 
             @Override
             public void onFailure(Call<UserProfileDto> call, Throwable t) {
-                EventBus.getDefault().post(new ErrorMessageEvent("Unknowing error"));
+                EventBus.getDefault().post(new ErrorMessageEvent("Неизвестная ошибка"));
             }
         });
     }
@@ -102,7 +102,7 @@ public class NetworkService {
                 try {
                     OrderDto.Oreders.add(response.body());
                     EventBus.getDefault().post(new OrderEvent());
-                    EventBus.getDefault().post(new ErrorMessageEvent("Ожидайте звонка водителя"));
+                    EventBus.getDefault().post(new ErrorMessageEvent("Когда Вас отвезут нажмите " + "\"Я доехал\""));
                 } catch (Exception e) {
                     EventBus.getDefault().post(new ErrorMessageEvent("Вы еще не завершили предыдущий заказ"));
                 }
