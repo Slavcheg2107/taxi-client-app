@@ -102,7 +102,7 @@ public class NetworkService {
                 try {
                     OrderDto.Oreders.add(response.body());
                     EventBus.getDefault().post(new OrderEvent());
-                    EventBus.getDefault().post(new ErrorMessageEvent("Когда Вас отвезут нажмите " + "\"Я доехал\""));
+                    EventBus.getDefault().post(new ErrorMessageEvent("Когда вас довезут нажмите " + "\"Я доехал\""));
                 } catch (Exception e) {
                     EventBus.getDefault().post(new ErrorMessageEvent("Вы еще не завершили предыдущий заказ"));
                 }
