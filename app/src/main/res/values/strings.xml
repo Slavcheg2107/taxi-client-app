@@ -7,8 +7,8 @@
     <string name="form_label">Напишите ваш адрес</string>
     <string name="to_label">Напишите куда поедим</string>
     <string name="time_label">Time</string>
-    <string name="make_order_label">Сделать заказ</string>
-    <string name="done_order_label">Завершить заказ</string>
+    <string name="make_order_label">Прокатиться</string>
+    <string name="done_order_label">Я доехал</string>
     <string name="empty_order">Все поля должны быть заполнены</string>
     <string name="changeNumber">Change number</string>
     <string name="you_are_have_order">Вы еще не завершили предыдущий заказ</string>

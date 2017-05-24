@@ -79,7 +79,7 @@
         android:alpha=".8"
         android:background="@android:color/white"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <EditText
             android:id="@+id/fromET"
@@ -118,7 +118,7 @@
                 android:layout_marginTop="10dp"
                 android:background="#595959"
                 android:padding="10dp"
-                android:text="Заказать"
+                android:text="Жду звонка"
                 android:textColor="#ffffff"
                 android:textSize="20sp" />
 
