@@ -34,6 +34,9 @@
             android:name="jdroidcoder.ua.taxi_bishkek_client.service.LocationService"
             android:enabled="true"
             android:exported="true" />
+        <service android:name=".service.UpdateOrdersService"
+            android:enabled="true"
+            android:exported="true"/>
 
         <activity
             android:name="jdroidcoder.ua.taxi_bishkek_client.activity.MapsActivity"
