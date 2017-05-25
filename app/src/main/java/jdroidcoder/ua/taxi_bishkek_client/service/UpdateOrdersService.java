@@ -27,7 +27,7 @@ public class UpdateOrdersService extends IntentService {
                 while (isRun) {
                     new NetworkService().getOrders(UserProfileDto.User.getPhone());
                     try {
-                        TimeUnit.SECONDS.sleep(10);
+                        TimeUnit.SECONDS.sleep(5);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
