@@ -1,35 +1,33 @@
 {
   "project_info": {
-    "project_number": "639409880035",
-    "firebase_url": "https://taxi-bishkek-client.firebaseio.com",
-    "project_id": "taxi-bishkek-client",
-    "storage_bucket": "taxi-bishkek-client.appspot.com"
+    "project_number": "221131345159",
+    "project_id": "taxi-170818"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:639409880035:android:cbca1cbd4783f804",
+        "mobilesdk_app_id": "1:221131345159:android:27d689d63f1b7a06",
         "android_client_info": {
-          "package_name": "jdroidcoder.ua.taxi_bishkek_client"
+          "package_name": "com.google.samples.quickstart.signin"
         }
       },
       "oauth_client": [
         {
-          "client_id": "639409880035-ld2ds22rfetgktvg22sfdm13gfnmglte.apps.googleusercontent.com",
+          "client_id": "221131345159-se6lphif1j5jbe1li38qspukddba5pt1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "jdroidcoder.ua.taxi_bishkek_client",
-            "certificate_hash": "a3b2f554cfa27b856f71d24c51a2c153a56432d1"
+            "package_name": "com.google.samples.quickstart.signin",
+            "certificate_hash": "01add9ee2bcb96af5a758aaeef1513149f89f61e"
           }
         },
         {
-          "client_id": "639409880035-ljcijjctnj8eleosrrdo2gacs3jkf0s8.apps.googleusercontent.com",
+          "client_id": "221131345159-48772mu5uhv70s0kla9jp8h6pvt37nuc.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBaoL4uqNaMH35v8HQYuTOaD4E46LnCH4Y"
+          "current_key": "AIzaSyAR7CZp8kOm3lXUN6FqRqLWEMNXUbo6hlc"
         }
       ],
       "services": {
@@ -37,16 +35,50 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "639409880035-ljcijjctnj8eleosrrdo2gacs3jkf0s8.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 2
+          "status": 1
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221131345159:android:cbca1cbd4783f804",
+        "android_client_info": {
+          "package_name": "jdroidcoder.ua.taxi_bishkek_client"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "221131345159-tn39uh3mbljupmnrhg6cgkddv0m5g72j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "jdroidcoder.ua.taxi_bishkek_client",
+            "certificate_hash": "01add9ee2bcb96af5a758aaeef1513149f89f61e"
+          }
+        },
+        {
+          "client_id": "221131345159-48772mu5uhv70s0kla9jp8h6pvt37nuc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAR7CZp8kOm3lXUN6FqRqLWEMNXUbo6hlc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
         }
       }
     }

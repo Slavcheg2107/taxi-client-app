@@ -14,7 +14,7 @@ import retrofit2.http.Query;
 /**
  * Created by jdroidcoder on 07.04.17.
  */
-public interface ApiNetwork {
+public interface    ApiNetwork {
     @POST("register")
     @FormUrlEncoded
     Call<Boolean> register(@Field("email") String email, @Field("password") String password);
@@ -29,6 +29,7 @@ public interface ApiNetwork {
                                           @Field("firstName") String firstName,
                                           @Field("lastName") String lastName,
                                           @Field("phone") String phone);
+
 
     @FormUrlEncoded
     @POST("setCoordinate")

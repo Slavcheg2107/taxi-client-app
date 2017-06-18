@@ -32,11 +32,10 @@
 
         <service
             android:name="jdroidcoder.ua.taxi_bishkek_client.service.LocationService"
-            android:enabled="true"
-            android:exported="true" />
+            android:enabled="true" />
         <service android:name=".service.UpdateOrdersService"
-            android:enabled="true"
-            android:exported="true"/>
+            android:enabled="true" />
+        <service android:name=".service.NotificationService"/>
 
         <activity
             android:name="jdroidcoder.ua.taxi_bishkek_client.activity.MapsActivity"
@@ -47,7 +46,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDUwhlpulPNHCtw2iYVHQnF6tLd3k-Egsw" />
+            android:value="AIzaSyBuA13GTye-K2iO7oc3wdnK4RrX-96aFFQ" />
 
         <meta-data
             android:name="com.google.android.gms.version"

@@ -5,10 +5,12 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.Date;
 import java.util.List;
 
+import jdroidcoder.ua.taxi_bishkek_client.activity.LoginActivity;
 import jdroidcoder.ua.taxi_bishkek_client.events.ConnectionErrorEvent;
 import jdroidcoder.ua.taxi_bishkek_client.events.ErrorMessageEvent;
 import jdroidcoder.ua.taxi_bishkek_client.events.MoveNextEvent;
 import jdroidcoder.ua.taxi_bishkek_client.events.OrderEvent;
+import jdroidcoder.ua.taxi_bishkek_client.events.SimChangedEvent;
 import jdroidcoder.ua.taxi_bishkek_client.events.TypePhoneEvent;
 import jdroidcoder.ua.taxi_bishkek_client.events.UpdateAdapterEvent;
 import jdroidcoder.ua.taxi_bishkek_client.model.OrderDto;
@@ -16,6 +18,9 @@ import jdroidcoder.ua.taxi_bishkek_client.model.UserProfileDto;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static jdroidcoder.ua.taxi_bishkek_client.activity.LoginActivity.APP_PREFERENCES_SIMID;
+import static jdroidcoder.ua.taxi_bishkek_client.activity.LoginActivity.prevGEmail;
 
 /**
  * Created by jdroidcoder on 07.04.17.
@@ -34,8 +39,18 @@ public class NetworkService {
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if (response.body()) {
                     EventBus.getDefault().post(new TypePhoneEvent());
-                } else {
-                    login(login, password);
+                }
+                else {
+                    if (!LoginActivity.settings.getString(APP_PREFERENCES_SIMID, "").equals(LoginActivity.m.getSimSerialNumber())) {
+                        if(LoginActivity.count  ==1){
+                            prevGEmail = login;}
+                        if(LoginActivity.count == 0){
+                            login(login, password);
+                        }
+                        EventBus.getDefault().post(new SimChangedEvent());
+                    } else {
+                        login(login, password);
+                    }
                 }
             }
 
@@ -69,7 +84,7 @@ public class NetworkService {
         });
     }
 
-    public void login(final String login, final String password) {
+    private void login(final String login, final String password) {
         Call<UserProfileDto> call = retrofitConfig.getApiNetwork().login(login, password);
         call.enqueue(new Callback<UserProfileDto>() {
             @Override
@@ -102,7 +117,7 @@ public class NetworkService {
                 try {
                     OrderDto.Oreders.add(response.body());
                     EventBus.getDefault().post(new OrderEvent());
-                    EventBus.getDefault().post(new ErrorMessageEvent("Когда вас довезут нажмите " + "\"Я доехал\""));
+                    EventBus.getDefault().post(new ErrorMessageEvent("Когда водитель отвезёт, нажмите " + "\"Завершить\""));
                 } catch (Exception e) {
                     EventBus.getDefault().post(new ErrorMessageEvent("Вы еще не завершили предыдущий заказ"));
                 }

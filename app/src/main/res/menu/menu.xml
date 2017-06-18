@@ -6,4 +6,10 @@
         <!--android:id="@+id/changeNumber"-->
         <!--android:title="ТАРИФЫ"-->
         <!--app:showAsAction="always"/>-->
+    <item
+        android:id="@+id/contact"
+        android:icon="@android:drawable/ic_menu_call"
+        android:title="Красавчик"
+        app:showAsAction="always|withText"
+        />
 </menu>

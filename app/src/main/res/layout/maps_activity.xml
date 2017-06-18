@@ -35,7 +35,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/makeOrder"
+                android:id="@+id/cancel_order"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginRight="1dp"
@@ -54,7 +54,7 @@
                 android:background="@color/colorPrimaryDark"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="@string/done_order_label"
+                android:text= "@string/done_order_label"
                 android:textColor="@android:color/white" />
         </LinearLayout>
 
@@ -75,11 +75,15 @@
         android:id="@+id/orderView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
         android:alpha=".8"
         android:background="@android:color/white"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="visible"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="12dp"
+        android:layout_below="@+id/decore"
+        android:layout_centerHorizontal="true">
 
         <EditText
             android:id="@+id/fromET"
@@ -118,7 +122,7 @@
                 android:layout_marginTop="10dp"
                 android:background="#595959"
                 android:padding="10dp"
-                android:text="Жду звонка"
+                android:text="Создать заказ"
                 android:textColor="#ffffff"
                 android:textSize="20sp" />
 
@@ -132,19 +136,25 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/orders"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/buttons"
-        android:layout_below="@id/decore"
-        android:background="#ecebeb"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <ListView
-            android:id="@+id/orderListView"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttons"
+        android:gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:alpha=".8"
+        android:background="@android:color/white"
+        >
+        <TextView
+            android:id="@+id/orderStatus"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp" />
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:background="#595959"
+            android:textColor="#ffffff"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            />
     </LinearLayout>
 </RelativeLayout>

@@ -44,9 +44,9 @@ public class OrderDto {
         this.pointB = pointB;
     }
 
-    public String getTime() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
-        return simpleDateFormat.format(new Date(time));
+    public Date getTime() {
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+        return new Date();
     }
 
     public void setTime(Long time) {
@@ -78,7 +78,7 @@ public class OrderDto {
     }
 
     public String getPoints() {
-        return "от "+getPointA() + "\n\nдо " + getPointB() + "\n";
+        return "от "+getPointA() + "\n\nдо " + getPointB();
     }
 
     @Override
